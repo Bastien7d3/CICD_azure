@@ -1,10 +1,10 @@
 resource "azurerm_resource_group" "rg_demo" { # juste un group pour mettre des trucs dedans
-  name     = "Replace_here_name"
+  name     = "first_student_demo"
   location = "West Europe"
 }
 
 resource "azurerm_storage_account" "my_front_app" { # storage account, ici on met du front dedans mais on peut mettre du back ou de la bdd
-  name                     = "replacehereformyrg99"
+  name                     = "first_storage_front"
   resource_group_name      = azurerm_resource_group.rg_demo.name
   location                 = azurerm_resource_group.rg_demo.location
   account_tier             = "Standard"
@@ -19,7 +19,7 @@ resource "azurerm_storage_account" "my_front_app" { # storage account, ici on me
 }
 
 resource "azurerm_service_plan" "my_back_server" { #back end ici
-  name                = "replace-here-asp-01"
+  name                = "first_storage_back"
   resource_group_name = azurerm_resource_group.rg_demo.name
   location            = azurerm_resource_group.rg_demo.location
   os_type             = "Linux"
@@ -27,7 +27,7 @@ resource "azurerm_service_plan" "my_back_server" { #back end ici
 }
 
 resource "azurerm_linux_web_app" "my_back_api" { #baack end api
-  name                = "replace-here-web-app-01"
+  name                = "first_storage_api"
   resource_group_name = azurerm_resource_group.rg_demo.name
   location            = azurerm_resource_group.rg_demo.location
   service_plan_id     = azurerm_service_plan.my_back_server.id
@@ -50,7 +50,7 @@ resource "azurerm_linux_web_app" "my_back_api" { #baack end api
 }
 
 resource "azurerm_mssql_server" "my_database_server" { # BDD ultra simple
-  name                         = "my-first-database-server-01"
+  name                         = "first_storage_bdd"
   resource_group_name          = azurerm_resource_group.rg_demo.name
   location                     = azurerm_resource_group.rg_demo.location
   version                      = "12.0"
@@ -59,8 +59,8 @@ resource "azurerm_mssql_server" "my_database_server" { # BDD ultra simple
   administrator_login_password = "My_Pa$$w0rd"
 
   azuread_administrator {
-    login_username = "ken.fontaine@eurotunnel.com"
-    object_id      = "ff9ca368-bdc8-4517-a9ab-a29c55a9c0b6"
+    login_username = "Bastien.Brunel@etu.univ-littoral.fr"
+    object_id      = "73d027cd-e4e0-43ea-a2b7-63e307cdaa27"
   }
   tags = {
     environment = "student_demo"
@@ -68,7 +68,7 @@ resource "azurerm_mssql_server" "my_database_server" { # BDD ultra simple
 }
 
 resource "azurerm_mssql_database" "my_database" {
-  name           = "my-first-db-01"
+  name           = "first_bdd"
   server_id      = azurerm_mssql_server.my_database_server.id
   collation      = "SQL_Latin1_General_CP1_CI_AS"
   license_type   = "LicenseIncluded"
